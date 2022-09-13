@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using RosSharp.RosBridgeClient;
 using UnityEngine;
 using UnityEngine.UI;
+using RosSharp;
 
 class
 TargetPosesPublisher
@@ -23,12 +24,12 @@ TargetPosesPublisher
         int i = 0;
         foreach (GameObject target in objects)
         {
-            message.data[i] = target.transform.position.z;
-            message.data[i + 1] = -1 * target.transform.position.x;
-            message.data[i + 2] = 0;
-
+            Vector3 rosPosition = target.transform.position.Unity2Ros();
+            message.data[i] = rosPosition.x;
+            message.data[i + 1] = rosPosition.y;
+            message.data[i + 2] = rosPosition.z;
             i += 3;
         }
-        Publish (message);
+        Publish(message);
     }
 }

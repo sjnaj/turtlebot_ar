@@ -37,7 +37,7 @@ namespace RosSharp.RosBridgeClient
             // new Thread(Subscribe).Start();
         }
 
-     public   void Update()
+        public void Update()
         {
             if (!isSubscribe && rosConnector.isConnected)
             {

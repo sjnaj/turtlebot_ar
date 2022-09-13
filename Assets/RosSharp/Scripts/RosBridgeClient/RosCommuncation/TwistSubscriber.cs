@@ -46,8 +46,9 @@ namespace RosSharp.RosBridgeClient
             return new Vector3((float)geometryVector3.x, (float)geometryVector3.y, (float)geometryVector3.z);
         }
 
-        private void Update()
+        private new void Update()
         {
+            base.Update();
             if (isMessageReceived)
                 ProcessMessage();
             previousRealTime = Time.realtimeSinceStartup;

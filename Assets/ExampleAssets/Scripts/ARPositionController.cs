@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-[RequireComponent(typeof (ARRaycastManager))] //确保添加该脚本的对象上有ARRaycastManager组件
+[RequireComponent(typeof(ARRaycastManager))] //确保添加该脚本的对象上有ARRaycastManager组件
 public class ARPositionController : MonoBehaviour
 {
     // public GameObject spawnPrefab;//预制体，拖入设置
@@ -22,11 +22,15 @@ public class ARPositionController : MonoBehaviour
 
     private static Ray ray;
 
+    private GameObject arCamera;
+
     private void Start()
     {
         Hits = new List<ARRaycastHit>();
 
         mRaycastManager = GetComponent<ARRaycastManager>();
+
+        arCamera = GameObject.Find("AR Camera");
     }
 
     // Update is called once per frame
@@ -54,6 +58,7 @@ public class ARPositionController : MonoBehaviour
             }
             // MyLogger.Log(hitPose.position.ToString());
             position = hitPose.position;
+
         }
     }
 }

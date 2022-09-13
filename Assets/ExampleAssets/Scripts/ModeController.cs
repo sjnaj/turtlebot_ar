@@ -8,6 +8,8 @@ public class ModeController : MonoBehaviour
 {
     public Dropdown dropdown; //手动控制/自主导航/AR模式
 
+    public Dropdown dropdown1;//控制AR平面显示与隐藏
+
     private GameObject plane1;
 
     private GameObject plane2;
@@ -23,6 +25,8 @@ public class ModeController : MonoBehaviour
 
     public static string mode;
 
+    GameObject arCamera;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,13 +38,16 @@ public class ModeController : MonoBehaviour
         btn4 = GameObject.Find("Button4");
         arPlaneManager =
             GameObject.Find("AR Session Origin").GetComponent<ARPlaneManager>();
-            arPlaneManager.enabled = false;
-
+        arPlaneManager.enabled = false;
+        // arCamera = GameObject.Find("AR Camera");
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        dropdown1.onValueChanged.AddListener(SetAllPlanesActive);
+        // MyLogger.Log(arCamera.transform.position.ToString());
         bool enable = dropdown.value == 2;
         plane1.SetActive(!enable);
         plane2.SetActive(!enable);
@@ -52,5 +59,14 @@ public class ModeController : MonoBehaviour
         arPlaneManager.enabled = enable;
 
         mode = dropdown.options[dropdown.value].text;
+    }
+
+    void SetAllPlanesActive(int index)//AR平面可见性
+    {
+        bool active = index == 0;
+        foreach (var plane in arPlaneManager.trackables)
+        {
+            plane.gameObject.SetActive(active);
+        }
     }
 }
